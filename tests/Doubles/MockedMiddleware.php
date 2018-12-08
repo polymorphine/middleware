@@ -20,11 +20,14 @@ use Polymorphine\Middleware\Tests\Fixtures\ExecutionOrder;
 
 class MockedMiddleware implements MiddlewareInterface
 {
+    public static $instance = false;
+
     private $id;
 
     public function __construct(string $id)
     {
         $this->id = $id;
+        self::$instance = true;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
