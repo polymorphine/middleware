@@ -11,11 +11,10 @@
 
 namespace Polymorphine\Middleware;
 
-
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 
 class LazyMiddleware implements MiddlewareInterface
@@ -38,7 +37,6 @@ class LazyMiddleware implements MiddlewareInterface
 
     private function middleware(): MiddlewareInterface
     {
-        return $this->middleware
-            ?: $this->middleware = ($this->middlewareCallback)();
+        return $this->middleware ?: $this->middleware = ($this->middlewareCallback)();
     }
 }
