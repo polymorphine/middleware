@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * This file is part of Polymorphine/Middleware package.
@@ -19,15 +19,19 @@ use Psr\Http\Message\ResponseInterface;
 
 class MiddlewareHandler implements RequestHandlerInterface
 {
-    private $middleware;
-    private $handler;
+    private MiddlewareInterface     $middleware;
+    private RequestHandlerInterface $handler;
 
+    /**
+     * Allows inserting middleware into request handler pipeline.
+     */
     public function __construct(MiddlewareInterface $middleware, RequestHandlerInterface $handler)
     {
         $this->middleware = $middleware;
         $this->handler    = $handler;
     }
 
+    /** {@inheritDoc} */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->middleware->process($request, $this->handler);
