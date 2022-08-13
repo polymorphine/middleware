@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * This file is part of Polymorphine/Middleware package.
@@ -19,13 +19,17 @@ use Psr\Http\Message\ResponseInterface;
 
 class MiddlewareChain implements MiddlewareInterface
 {
-    private $middlewares = [];
+    private array $middlewares;
 
+    /**
+     * Allows composing multiple middlewares into single composite middleware.
+     */
     public function __construct(MiddlewareInterface ...$middlewares)
     {
         $this->middlewares = $middlewares;
     }
 
+    /** {@inheritDoc} */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         return $this->compose($handler)->handle($request);

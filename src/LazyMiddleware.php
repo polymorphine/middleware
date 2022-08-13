@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * This file is part of Polymorphine/Middleware package.
@@ -15,21 +15,23 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Closure;
 
 
 class LazyMiddleware implements MiddlewareInterface
 {
-    private $middlewareCallback;
-    private $middleware;
+    private Closure             $middlewareCallback;
+    private MiddlewareInterface $middleware;
 
     /**
-     * @param callable $middlewareCallback function(): MiddlewareInterface
+     * @param Closure $middlewareCallback fn() => MiddlewareInterface
      */
-    public function __construct(callable $middlewareCallback)
+    public function __construct(Closure $middlewareCallback)
     {
         $this->middlewareCallback = $middlewareCallback;
     }
 
+    /** {@inheritDoc} */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         return $this->middleware()->process($request, $handler);
@@ -37,6 +39,6 @@ class LazyMiddleware implements MiddlewareInterface
 
     private function middleware(): MiddlewareInterface
     {
-        return $this->middleware ?: $this->middleware = ($this->middlewareCallback)();
+        return $this->middleware ??= ($this->middlewareCallback)();
     }
 }

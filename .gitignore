@@ -1,6 +1,4 @@
+.dev/
 .idea/
 vendor/
-app/
-public/
-build/
 /composer.lock

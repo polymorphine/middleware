@@ -12,14 +12,12 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.1",
+        "php": "^7.4 || ^8.0",
         "psr/http-server-handler": "^1.0",
         "psr/http-server-middleware": "^1.0"
     },
     "require-dev": {
-        "polymorphine/cs": "@dev",
-        "phpunit/phpunit": "^7.0",
-        "php-coveralls/php-coveralls": "^2.0"
+        "polymorphine/dev": "^0.1.0"
     },
     "autoload": {
         "psr-4": {
@@ -32,6 +30,10 @@
         }
     },
     "scripts": {
-        "style-check": "polymorphine-cs"
+        "test-cs": [
+            "vendor/bin/php-cs-fixer --dry-run -v --config=cs-fixer.php.dist --path-mode=intersection fix src tests",
+            "vendor/bin/phpcs --extensions=php --standard=vendor/polymorphine/dev/phpcs.xml src",
+            "vendor/bin/phpcs --extensions=php --standard=vendor/polymorphine/dev/phpcs.xml --ignore=*/CodeSamples/* tests"
+        ]
     }
 }

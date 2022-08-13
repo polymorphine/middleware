@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * This file is part of Polymorphine/Middleware package.
@@ -9,15 +9,12 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Polymorphine\Middleware;
+namespace Polymorphine\Middleware\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Polymorphine\Middleware\Tests\Doubles\FakeRequestHandler;
-use Polymorphine\Middleware\Tests\Doubles\DummyServerRequest;
-use Polymorphine\Middleware\Tests\Doubles\MockedMiddleware;
-use Polymorphine\Middleware\Tests\Fixtures\ExecutionOrder;
-use Psr\Http\Message\ResponseInterface;
+use Polymorphine\Middleware\MiddlewareChain;
 use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Message\ResponseInterface;
 
 
 class MiddlewareChainTest extends TestCase
@@ -34,30 +31,30 @@ class MiddlewareChainTest extends TestCase
 
     public function testSingleMiddlewareIsProcessed()
     {
-        $this->assertInstanceOf(ResponseInterface::class, $this->process(new MockedMiddleware('single')));
-        $this->assertSame(['single'], ExecutionOrder::$processIdList);
+        $this->assertInstanceOf(ResponseInterface::class, $this->process(new Doubles\MockedMiddleware('single')));
+        $this->assertSame(['single'], Fixtures\ExecutionOrder::$processIdList);
     }
 
     public function testChainIsProcessedInCorrectOrder()
     {
         $response = $this->process(
-            new MockedMiddleware('first'),
-            new MockedMiddleware('second'),
-            new MockedMiddleware('third')
+            new Doubles\MockedMiddleware('first'),
+            new Doubles\MockedMiddleware('second'),
+            new Doubles\MockedMiddleware('third')
         );
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertSame(['first', 'second', 'third'], ExecutionOrder::$processIdList);
+        $this->assertSame(['first', 'second', 'third'], Fixtures\ExecutionOrder::$processIdList);
     }
 
     private function process(MiddlewareInterface ...$middlewares): ResponseInterface
     {
         $middleware = $this->middleware(...$middlewares);
-        return $middleware->process(new DummyServerRequest(), new FakeRequestHandler());
+        return $middleware->process(new Doubles\DummyServerRequest(), new Doubles\FakeRequestHandler());
     }
 
-    private function middleware(MiddlewareInterface ...$middlewares)
+    private function middleware(MiddlewareInterface ...$middlewares): MiddlewareInterface
     {
-        ExecutionOrder::reset();
+        Fixtures\ExecutionOrder::reset();
         return new MiddlewareChain(...$middlewares);
     }
 }

@@ -1,6 +1,7 @@
-# polymorphine-middleware
-[![Build Status](https://travis-ci.org/shudd3r/polymorphine-middleware.svg?branch=develop)](https://travis-ci.org/shudd3r/polymorphine-middleware)
-[![Coverage Status](https://coveralls.io/repos/github/shudd3r/polymorphine-middleware/badge.svg?branch=develop)](https://coveralls.io/github/shudd3r/polymorphine-middleware?branch=develop)
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/polymorphine/middleware/dev-develop.svg)](https://packagist.org/packages/polymorphine/middleware)
-[![Packagist](https://img.shields.io/packagist/l/polymorphine/middleware.svg)](https://packagist.org/packages/polymorphine/middleware)
+# Polymorphine/Middleware
+[![Latest Stable Version](https://poser.pugx.org/polymorphine/middleware/version)](https://packagist.org/packages/polymorphine/middleware)
+[![Build status](https://github.com/polymorphine/middleware/workflows/build/badge.svg)](https://github.com/polymorphine/middleware/actions)
+[![Coverage status](https://coveralls.io/repos/github/polymorphine/middleware/badge.svg?branch=develop)](https://coveralls.io/github/polymorphine/middleware?branch=develop)
+[![PHP version](https://img.shields.io/packagist/php-v/polymorphine/middleware.svg)](https://packagist.org/packages/polymorphine/middleware)
+[![LICENSE](https://img.shields.io/github/license/polymorphine/middleware.svg?color=blue)](LICENSE)
 ### Middleware composition library

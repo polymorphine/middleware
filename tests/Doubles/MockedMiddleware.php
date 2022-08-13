@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * This file is part of Polymorphine/Middleware package.
@@ -20,9 +20,9 @@ use Polymorphine\Middleware\Tests\Fixtures\ExecutionOrder;
 
 class MockedMiddleware implements MiddlewareInterface
 {
-    public static $instance = false;
+    public static bool $instance = false;
 
-    private $id;
+    private string $id;
 
     public function __construct(string $id)
     {

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * This file is part of Polymorphine/Middleware package.
@@ -14,14 +14,14 @@ namespace Polymorphine\Middleware\Tests\Fixtures;
 
 class ExecutionOrder
 {
-    public static $processIdList = [];
+    public static array $processIdList = [];
 
-    public static function reset()
+    public static function reset(): void
     {
         self::$processIdList = [];
     }
 
-    public static function add(string $id)
+    public static function add(string $id): void
     {
         self::$processIdList[] = $id;
     }
