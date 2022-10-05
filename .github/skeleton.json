@@ -1,0 +1,8 @@
+{
+    "package.name": "Polymorphine/Middleware",
+    "repository.name": "polymorphine/middleware",
+    "package.description": "Middleware composition library",
+    "namespace.src": "Polymorphine\\Middleware",
+    "author.name": "Shudd3r",
+    "author.email": "q3.shudder@gmail.com"
+}
