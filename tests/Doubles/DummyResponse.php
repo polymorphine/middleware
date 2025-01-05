@@ -17,59 +17,75 @@ use Psr\Http\Message\StreamInterface;
 
 class DummyResponse implements ResponseInterface
 {
-    public function getProtocolVersion()
+    public StreamInterface $body;
+
+    public function getProtocolVersion(): string
     {
+        return '1.0';
     }
 
-    public function withProtocolVersion($version)
+    public function withProtocolVersion($version): ResponseInterface
     {
+        return $this;
     }
 
-    public function getHeaders()
+    public function getHeaders(): array
     {
+        return [];
     }
 
-    public function hasHeader($name)
+    public function hasHeader($name): bool
     {
+        return false;
     }
 
-    public function getHeader($name)
+    public function getHeader($name): array
     {
+        return [];
     }
 
-    public function getHeaderLine($name)
+    public function getHeaderLine($name): string
     {
+        return '';
     }
 
-    public function withHeader($name, $value)
+    public function withHeader($name, $value): ResponseInterface
     {
+        return $this;
     }
 
-    public function withAddedHeader($name, $value)
+    public function withAddedHeader($name, $value): ResponseInterface
     {
+        return $this;
     }
 
-    public function withoutHeader($name)
+    public function withoutHeader($name): ResponseInterface
     {
+        return $this;
     }
 
-    public function getBody()
+    public function getBody(): StreamInterface
     {
+        return $this->body;
     }
 
-    public function withBody(StreamInterface $body)
+    public function withBody(StreamInterface $body): ResponseInterface
     {
+        return $this;
     }
 
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
+        return 200;
     }
 
-    public function withStatus($code, $reasonPhrase = '')
+    public function withStatus($code, $reasonPhrase = ''): ResponseInterface
     {
+        return $this;
     }
 
-    public function getReasonPhrase()
+    public function getReasonPhrase(): string
     {
+        return '';
     }
 }
