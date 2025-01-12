@@ -31,30 +31,28 @@ class MiddlewareChainTest extends TestCase
 
     public function test_SingleMiddleware_IsProcessed()
     {
-        $this->assertInstanceOf(ResponseInterface::class, $this->process(new Doubles\MockedMiddleware('single')));
+        $this->assertInstanceOf(ResponseInterface::class, $this->process('single'));
         $this->assertSame(['single'], Doubles\MockedMiddleware::$processedInstances);
     }
 
     public function test_Chain_IsProcessedInCorrectOrder()
     {
-        $response = $this->process(
-            new Doubles\MockedMiddleware('first'),
-            new Doubles\MockedMiddleware('second'),
-            new Doubles\MockedMiddleware('third')
-        );
+        $response = $this->process('first', 'second', 'third');
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertSame(['first', 'second', 'third'], Doubles\MockedMiddleware::$processedInstances);
     }
 
-    private function process(MiddlewareInterface ...$middlewares): ResponseInterface
+    private function process(string ...$middlewareIds): ResponseInterface
     {
-        $middleware = $this->middleware(...$middlewares);
+        $middleware = $this->middleware(...$middlewareIds);
         return $middleware->process(new Doubles\DummyServerRequest(), new Doubles\FakeRequestHandler());
     }
 
-    private function middleware(MiddlewareInterface ...$middlewares): MiddlewareInterface
+    private function middleware(string ...$middlewareIds): MiddlewareInterface
     {
         Doubles\MockedMiddleware::reset();
+        $middlewares = array_map(fn (string $id) => new Doubles\MockedMiddleware($id), $middlewareIds);
+
         return new MiddlewareChain(...$middlewares);
     }
 }
