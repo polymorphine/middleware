@@ -19,23 +19,23 @@ use Psr\Http\Message\ResponseInterface;
 
 class MiddlewareChainTest extends TestCase
 {
-    public function testInstantiation()
+    public function test_Instantiation()
     {
         $this->assertInstanceOf(MiddlewareChain::class, $this->middleware());
     }
 
-    public function testEmptyChainIsProcessed()
+    public function test_EmptyChain_IsProcessed()
     {
         $this->assertInstanceOf(ResponseInterface::class, $this->process());
     }
 
-    public function testSingleMiddlewareIsProcessed()
+    public function test_SingleMiddleware_IsProcessed()
     {
         $this->assertInstanceOf(ResponseInterface::class, $this->process(new Doubles\MockedMiddleware('single')));
         $this->assertSame(['single'], Fixtures\ExecutionOrder::$processIdList);
     }
 
-    public function testChainIsProcessedInCorrectOrder()
+    public function test_Chain_IsProcessedInCorrectOrder()
     {
         $response = $this->process(
             new Doubles\MockedMiddleware('first'),
