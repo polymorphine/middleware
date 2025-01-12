@@ -18,12 +18,12 @@ use Psr\Http\Server\MiddlewareInterface;
 
 class LazyMiddlewareTest extends TestCase
 {
-    public function testInstantiation()
+    public function test_Instantiation()
     {
         $this->assertInstanceOf(MiddlewareInterface::class, $this->middleware());
     }
 
-    public function testInvokingMiddleware()
+    public function test_InvokingMiddleware()
     {
         $middleware = $this->middleware();
         $this->assertFalse(Doubles\MockedMiddleware::$instance);
@@ -33,9 +33,7 @@ class LazyMiddlewareTest extends TestCase
 
     private function middleware(): MiddlewareInterface
     {
-        Doubles\MockedMiddleware::$instance = false;
-        return new LazyMiddleware(function () {
-            return new Doubles\MockedMiddleware('lazy');
-        });
+        Doubles\MockedMiddleware::reset();
+        return new LazyMiddleware(fn () => new Doubles\MockedMiddleware('lazy'));
     }
 }

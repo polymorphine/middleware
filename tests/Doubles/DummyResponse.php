@@ -24,7 +24,7 @@ class DummyResponse implements ResponseInterface
         return '1.0';
     }
 
-    public function withProtocolVersion($version): ResponseInterface
+    public function withProtocolVersion($version): self
     {
         return $this;
     }
@@ -49,17 +49,17 @@ class DummyResponse implements ResponseInterface
         return '';
     }
 
-    public function withHeader($name, $value): ResponseInterface
+    public function withHeader($name, $value): self
     {
         return $this;
     }
 
-    public function withAddedHeader($name, $value): ResponseInterface
+    public function withAddedHeader($name, $value): self
     {
         return $this;
     }
 
-    public function withoutHeader($name): ResponseInterface
+    public function withoutHeader($name): self
     {
         return $this;
     }
@@ -69,7 +69,7 @@ class DummyResponse implements ResponseInterface
         return $this->body;
     }
 
-    public function withBody(StreamInterface $body): ResponseInterface
+    public function withBody(StreamInterface $body): self
     {
         return $this;
     }
@@ -79,7 +79,7 @@ class DummyResponse implements ResponseInterface
         return 200;
     }
 
-    public function withStatus($code, $reasonPhrase = ''): ResponseInterface
+    public function withStatus($code, $reasonPhrase = ''): self
     {
         return $this;
     }

@@ -41,7 +41,7 @@ class DummyServerRequest implements ServerRequestInterface
         return '1.0';
     }
 
-    public function withProtocolVersion($version): ServerRequestInterface
+    public function withProtocolVersion($version): self
     {
         return $this;
     }
@@ -66,17 +66,17 @@ class DummyServerRequest implements ServerRequestInterface
         return '';
     }
 
-    public function withHeader($name, $value): ServerRequestInterface
+    public function withHeader($name, $value): self
     {
         return $this;
     }
 
-    public function withAddedHeader($name, $value): ServerRequestInterface
+    public function withAddedHeader($name, $value): self
     {
         return $this;
     }
 
-    public function withoutHeader($name): ServerRequestInterface
+    public function withoutHeader($name): self
     {
         return $this;
     }
@@ -86,22 +86,22 @@ class DummyServerRequest implements ServerRequestInterface
         return $this->body;
     }
 
-    public function withBody(StreamInterface $body): ServerRequestInterface
+    public function withBody(StreamInterface $body): self
     {
         return $this;
     }
 
-    public function withRequestTarget($requestTarget): ServerRequestInterface
+    public function withRequestTarget($requestTarget): self
     {
         return $this;
     }
 
-    public function withMethod($method): ServerRequestInterface
+    public function withMethod($method): self
     {
         return $this;
     }
 
-    public function withUri(UriInterface $uri, $preserveHost = false): ServerRequestInterface
+    public function withUri(UriInterface $uri, $preserveHost = false): self
     {
         return $this;
     }
@@ -116,7 +116,7 @@ class DummyServerRequest implements ServerRequestInterface
         return [];
     }
 
-    public function withCookieParams(array $cookies): ServerRequestInterface
+    public function withCookieParams(array $cookies): self
     {
         return $this;
     }
@@ -126,7 +126,7 @@ class DummyServerRequest implements ServerRequestInterface
         return [];
     }
 
-    public function withQueryParams(array $query): ServerRequestInterface
+    public function withQueryParams(array $query): self
     {
         return $this;
     }
@@ -136,7 +136,7 @@ class DummyServerRequest implements ServerRequestInterface
         return [];
     }
 
-    public function withUploadedFiles(array $uploadedFiles): ServerRequestInterface
+    public function withUploadedFiles(array $uploadedFiles): self
     {
         return $this;
     }
@@ -146,7 +146,7 @@ class DummyServerRequest implements ServerRequestInterface
         return [];
     }
 
-    public function withParsedBody($data): ServerRequestInterface
+    public function withParsedBody($data): self
     {
         return $this;
     }
@@ -161,12 +161,12 @@ class DummyServerRequest implements ServerRequestInterface
         return $default;
     }
 
-    public function withAttribute($name, $value): ServerRequestInterface
+    public function withAttribute($name, $value): self
     {
         return $this;
     }
 
-    public function withoutAttribute($name): ServerRequestInterface
+    public function withoutAttribute($name): self
     {
         return $this;
     }

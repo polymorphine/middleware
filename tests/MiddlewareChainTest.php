@@ -19,42 +19,40 @@ use Psr\Http\Message\ResponseInterface;
 
 class MiddlewareChainTest extends TestCase
 {
-    public function testInstantiation()
+    public function test_Instantiation()
     {
         $this->assertInstanceOf(MiddlewareChain::class, $this->middleware());
     }
 
-    public function testEmptyChainIsProcessed()
+    public function test_EmptyChain_IsProcessed()
     {
         $this->assertInstanceOf(ResponseInterface::class, $this->process());
     }
 
-    public function testSingleMiddlewareIsProcessed()
+    public function test_SingleMiddleware_IsProcessed()
     {
-        $this->assertInstanceOf(ResponseInterface::class, $this->process(new Doubles\MockedMiddleware('single')));
-        $this->assertSame(['single'], Fixtures\ExecutionOrder::$processIdList);
+        $this->assertInstanceOf(ResponseInterface::class, $this->process('single'));
+        $this->assertSame(['single'], Doubles\MockedMiddleware::$processedInstances);
     }
 
-    public function testChainIsProcessedInCorrectOrder()
+    public function test_Chain_IsProcessedInCorrectOrder()
     {
-        $response = $this->process(
-            new Doubles\MockedMiddleware('first'),
-            new Doubles\MockedMiddleware('second'),
-            new Doubles\MockedMiddleware('third')
-        );
+        $response = $this->process('first', 'second', 'third');
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertSame(['first', 'second', 'third'], Fixtures\ExecutionOrder::$processIdList);
+        $this->assertSame(['first', 'second', 'third'], Doubles\MockedMiddleware::$processedInstances);
     }
 
-    private function process(MiddlewareInterface ...$middlewares): ResponseInterface
+    private function process(string ...$middlewareIds): ResponseInterface
     {
-        $middleware = $this->middleware(...$middlewares);
+        $middleware = $this->middleware(...$middlewareIds);
         return $middleware->process(new Doubles\DummyServerRequest(), new Doubles\FakeRequestHandler());
     }
 
-    private function middleware(MiddlewareInterface ...$middlewares): MiddlewareInterface
+    private function middleware(string ...$middlewareIds): MiddlewareInterface
     {
-        Fixtures\ExecutionOrder::reset();
+        Doubles\MockedMiddleware::reset();
+        $middlewares = array_map(fn (string $id) => new Doubles\MockedMiddleware($id), $middlewareIds);
+
         return new MiddlewareChain(...$middlewares);
     }
 }

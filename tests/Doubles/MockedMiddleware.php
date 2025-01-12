@@ -15,12 +15,12 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Polymorphine\Middleware\Tests\Fixtures\ExecutionOrder;
 
 
 class MockedMiddleware implements MiddlewareInterface
 {
-    public static bool $instance = false;
+    public static bool  $instance = false;
+    public static array $processedInstances = [];
 
     private string $id;
 
@@ -30,9 +30,15 @@ class MockedMiddleware implements MiddlewareInterface
         self::$instance = true;
     }
 
+    public static function reset(): void
+    {
+        self::$instance           = false;
+        self::$processedInstances = [];
+    }
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        ExecutionOrder::add($this->id);
+        self::$processedInstances[] = $this->id;
         return $handler->handle($request);
     }
 }
