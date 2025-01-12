@@ -33,7 +33,7 @@ class LazyMiddlewareTest extends TestCase
 
     private function middleware(): MiddlewareInterface
     {
-        Doubles\MockedMiddleware::$instance = false;
+        Doubles\MockedMiddleware::reset();
         return new LazyMiddleware(function () {
             return new Doubles\MockedMiddleware('lazy');
         });

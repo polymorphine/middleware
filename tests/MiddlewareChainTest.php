@@ -32,7 +32,7 @@ class MiddlewareChainTest extends TestCase
     public function test_SingleMiddleware_IsProcessed()
     {
         $this->assertInstanceOf(ResponseInterface::class, $this->process(new Doubles\MockedMiddleware('single')));
-        $this->assertSame(['single'], Fixtures\ExecutionOrder::$processIdList);
+        $this->assertSame(['single'], Doubles\MockedMiddleware::$processedInstances);
     }
 
     public function test_Chain_IsProcessedInCorrectOrder()
@@ -43,7 +43,7 @@ class MiddlewareChainTest extends TestCase
             new Doubles\MockedMiddleware('third')
         );
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertSame(['first', 'second', 'third'], Fixtures\ExecutionOrder::$processIdList);
+        $this->assertSame(['first', 'second', 'third'], Doubles\MockedMiddleware::$processedInstances);
     }
 
     private function process(MiddlewareInterface ...$middlewares): ResponseInterface
@@ -54,7 +54,7 @@ class MiddlewareChainTest extends TestCase
 
     private function middleware(MiddlewareInterface ...$middlewares): MiddlewareInterface
     {
-        Fixtures\ExecutionOrder::reset();
+        Doubles\MockedMiddleware::reset();
         return new MiddlewareChain(...$middlewares);
     }
 }
