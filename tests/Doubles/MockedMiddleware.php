@@ -22,18 +22,18 @@ class MockedMiddleware implements MiddlewareInterface
     public static bool  $instance = false;
     public static array $processedInstances = [];
 
+    public static function reset(): void
+    {
+        self::$instance           = false;
+        self::$processedInstances = [];
+    }
+
     private string $id;
 
     public function __construct(string $id)
     {
         $this->id = $id;
         self::$instance = true;
-    }
-
-    public static function reset(): void
-    {
-        self::$instance           = false;
-        self::$processedInstances = [];
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
